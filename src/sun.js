@@ -73,16 +73,18 @@ export class Sun {
 
   /**
    *
-   * @param {string[]}colors
+   * @param {string[]}[colors]
    * @param {number}[radius]
    */
   updateGraphic(colors, radius) {
+    if(colors){
+      this._texture = CreateGradient(this._radius * 2, colors);
+    }
     if (radius) {
       this._radius = radius;
     }
     this.sunGraphic.clear();
-    const texture = CreateGradient(this._radius * 2, colors);
-    this.sunGraphic.beginTextureFill({texture});
+    this.sunGraphic.beginTextureFill({texture: this._texture});
     this.sunGraphic.drawCircle(this._radius, this._radius, this._radius);
     this.sunGraphic.endFill();
     this.updateFilterDisplacement();
