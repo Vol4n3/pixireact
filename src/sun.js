@@ -41,16 +41,18 @@ export class Sun {
   }
 
   /**
-   * @param {number} zenith
-   */
-  updateZenith(zenith) {
-
-  }
-
-  /**
-   * @params {AdvancedBloomOptions} option
+   *
+   * @param {Object} options
+   * @param {number} [options.threshold]
+   * @param {number} [options.bloomScale]
+   * @param {number} [options.brightness]
+   * @param {number} [options.blur]
+   * @param {number} [options.quality]
    */
   updateBloom(options) {
+    if(!options){
+      return
+    }
     if (typeof options.threshold !== 'undefined') this.bloomFilter.threshold = options.threshold;
     if (typeof options.bloomScale !== 'undefined') this.bloomFilter.bloomScale = options.bloomScale;
     if (typeof options.brightness !== 'undefined') this.bloomFilter.brightness = options.brightness;
