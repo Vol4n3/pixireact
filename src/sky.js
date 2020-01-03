@@ -5,7 +5,7 @@ export class Sky {
   constructor(width, height) {
     this.sprite = new Graphics();
 
-    this.updateDraw(width, height, ['#6bddff', '#fde4da']);
+    this.updateDraw(width, height, [{color : '#6bddff',offset: 0},{color : '#fde4da',offset: 1}]);
   }
 
   updateDraw(width, height, colors) {
@@ -15,7 +15,7 @@ export class Sky {
     this.sprite.clear();
     this.texture = CreateGradient(height * 2, this.colors);
     this.sprite.beginTextureFill({texture: this.texture});
-    this.sprite.drawRect(0, 0, width, height);
+    this.sprite.drawRect(0, 0, width, height - height /3);
     this.sprite.endFill();
   }
 }
