@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.js": "/static/js/main.0252e330.chunk.js",
-    "main.js.map": "/static/js/main.0252e330.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.1b01ccc2.js",
-    "runtime-main.js.map": "/static/js/runtime-main.1b01ccc2.js.map",
-    "static/js/2.870304f5.chunk.js": "/static/js/2.870304f5.chunk.js",
-    "static/js/2.870304f5.chunk.js.map": "/static/js/2.870304f5.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.5a89b93c041c2d3882d6528e2aa60bb0.js": "/precache-manifest.5a89b93c041c2d3882d6528e2aa60bb0.js",
-    "service-worker.js": "/service-worker.js",
-    "static/js/2.870304f5.chunk.js.LICENSE": "/static/js/2.870304f5.chunk.js.LICENSE"
+    "main.js": "/pixireact/static/js/main.0252e330.chunk.js",
+    "main.js.map": "/pixireact/static/js/main.0252e330.chunk.js.map",
+    "runtime-main.js": "/pixireact/static/js/runtime-main.04f04656.js",
+    "runtime-main.js.map": "/pixireact/static/js/runtime-main.04f04656.js.map",
+    "static/js/2.870304f5.chunk.js": "/pixireact/static/js/2.870304f5.chunk.js",
+    "static/js/2.870304f5.chunk.js.map": "/pixireact/static/js/2.870304f5.chunk.js.map",
+    "index.html": "/pixireact/index.html",
+    "precache-manifest.bc898bba0ff3bbc2d0dad459225dc57e.js": "/pixireact/precache-manifest.bc898bba0ff3bbc2d0dad459225dc57e.js",
+    "service-worker.js": "/pixireact/service-worker.js",
+    "static/js/2.870304f5.chunk.js.LICENSE": "/pixireact/static/js/2.870304f5.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.1b01ccc2.js",
+    "static/js/runtime-main.04f04656.js",
     "static/js/2.870304f5.chunk.js",
     "static/js/main.0252e330.chunk.js"
   ]
