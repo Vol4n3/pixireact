@@ -2,6 +2,7 @@
   "name": "pixireact",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://vol4n3.github.io/pixireact/",
   "dependencies": {
     "pixi-filters": "^3.0.3",
     "pixi.js": "^5.2.0",
