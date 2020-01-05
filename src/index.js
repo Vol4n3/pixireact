@@ -5,9 +5,11 @@ import {Application, Container} from 'pixi.js';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
+import {Hexagon} from './hexagon';
+import {HexagonGrid} from './hexagonGrid';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
-const padding = 200;
+const padding = 0;
 let width = window.innerWidth + padding;
 let height = window.innerHeight + padding;
 const resizeListeners = [];
@@ -51,7 +53,17 @@ resizeListeners.push(() => {
 });
 container.addChild(ground.sprite);
 
+const hexagonMap = new HexagonGrid(width,height);
+hexagonMap.container.zIndex = 5;
+container.addChild(hexagonMap.container);
+
+
 app.stage.addChild(container);
+
+
+
+
+
 const minDistanceRangeLoop = (start, end, min, max) => {
   const distanceA = end - start;
   let distanceB;

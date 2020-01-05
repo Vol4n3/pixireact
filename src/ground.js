@@ -7,7 +7,7 @@ export class Ground {
   }
   updateSize(width,height){
     this.sprite.clear();
-    this.sprite.beginFill(0xaaccaa);
+    this.sprite.beginFill(0x559955);
     this.sprite.moveTo(0, 0);
     this.sprite.lineTo(width, 0);
     this.sprite.lineTo(width, -height / 3);
