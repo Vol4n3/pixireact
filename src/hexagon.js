@@ -24,11 +24,11 @@ export class Hexagon {
     this.sprite.on('click', this.onClick.bind(this));
   }
   get height() {
-    return 2 * this.radius + 20;
+    return 2 * this.radius + 10;
   }
 
   get width() {
-    return Math.sqrt(3) * this.radius + 20;
+    return Math.sqrt(3) * this.radius + 10;
   }
 
   /**

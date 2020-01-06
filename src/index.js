@@ -5,7 +5,6 @@ import {Application, Container} from 'pixi.js';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
-import {Hexagon} from './hexagon';
 import {HexagonGrid} from './hexagonGrid';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
@@ -37,31 +36,29 @@ container.sortableChildren = true;
 const sky = new Sky(width, height);
 
 sky.sprite.zIndex = 1;
-container.addChild(sky.sprite);
+// container.addChild(sky.sprite);
 resizeListeners.push(() => {
   sky.updateDraw(width, height);
 });
 const sun = new Sun(app, 50);
 sun.sprite.zIndex = 2;
 sun.sprite.position.set(width / 2 - 200, 0);
-container.addChild(sun.sprite);
+//container.addChild(sun.sprite);
 
 const ground = new Ground(width, height);
 ground.sprite.zIndex = 4;
 resizeListeners.push(() => {
   ground.updateSize(width, height);
 });
-container.addChild(ground.sprite);
+//container.addChild(ground.sprite);
 
-const hexagonMap = new HexagonGrid(width,height);
+const hexagonMap = new HexagonGrid(width, height);
 hexagonMap.container.zIndex = 5;
+hexagonMap.container.setTransform(100,35,1,1,0,-0.33,0,0,0);
 container.addChild(hexagonMap.container);
 
 
 app.stage.addChild(container);
-
-
-
 
 
 const minDistanceRangeLoop = (start, end, min, max) => {

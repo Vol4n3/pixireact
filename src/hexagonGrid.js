@@ -3,9 +3,9 @@ import {Hexagon} from './hexagon';
 import {HexagonCube} from './hexagonCube';
 
 export class HexagonGrid {
-  constructor(screenWidth, screenHeight) {
+  constructor() {
     this.container = new Container();
-    let base = new Hexagon(0, 0, 50, new HexagonCube(0, 0, 0));
+    let base = new Hexagon(0, 0, 35, new HexagonCube(0, 0, 0));
     this.container.addChild(base.sprite);
     for (let i = 1; i < 10; i++) {
       const nextCube = base._cube.nextDirection('east', i);
@@ -29,6 +29,5 @@ export class HexagonGrid {
       this.container.addChild(nextHexagon.sprite);
     }
     this.container.addChild(row3.sprite);
-    this.container.position.set(base.width + 10, 10 + base.height / 2 + screenHeight  -  screenHeight / 3);
   }
 }
