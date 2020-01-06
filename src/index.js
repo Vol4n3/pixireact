@@ -11,6 +11,7 @@ ReactDOM.render(<App/>, document.getElementById('root'));
 const padding = 0;
 let width = window.innerWidth + padding;
 let height = window.innerHeight + padding;
+const groundHeight = 375;
 const resizeListeners = [];
 const app = new Application({
   width,
@@ -33,33 +34,31 @@ window.addEventListener('resize', () => {
 const container = new Container();
 container.sortableChildren = true;
 
-const sky = new Sky(width, height);
+const sky = new Sky(width, height, groundHeight);
 
 sky.sprite.zIndex = 1;
-// container.addChild(sky.sprite);
+container.addChild(sky.sprite);
 resizeListeners.push(() => {
-  sky.updateDraw(width, height);
+  sky.updateDraw(width, height, groundHeight);
 });
 const sun = new Sun(app, 50);
 sun.sprite.zIndex = 2;
 sun.sprite.position.set(width / 2 - 200, 0);
-//container.addChild(sun.sprite);
+container.addChild(sun.sprite);
 
-const ground = new Ground(width, height);
+const ground = new Ground(width, height, groundHeight);
 ground.sprite.zIndex = 4;
 resizeListeners.push(() => {
-  ground.updateSize(width, height);
+  ground.updateSize(width, height, groundHeight);
 });
-//container.addChild(ground.sprite);
+container.addChild(ground.sprite);
 
 const hexagonMap = new HexagonGrid(width, height);
 hexagonMap.container.zIndex = 5;
-hexagonMap.container.setTransform(100,35,1,1,0,-0.33,0,0,0);
+hexagonMap.container.position.set(50, 50 + height - groundHeight);
 container.addChild(hexagonMap.container);
 
-
 app.stage.addChild(container);
-
 
 const minDistanceRangeLoop = (start, end, min, max) => {
   const distanceA = end - start;
@@ -104,7 +103,6 @@ const stepsSkyColors = [
   {a: [197, 98, 78, 0], b: [197, 98, 78, 0], c: [197, 98, 78, 0], d: [198, 62, 52, 1]}, // 11
 ];
 const updateSkySun = (sunPosition, powerDisplacement) => {
-  const horizon = height - height / 3;
   const division = 100;
   if (sunPosition < 0) {
     sunPosition = 0;
@@ -134,7 +132,7 @@ const updateSkySun = (sunPosition, powerDisplacement) => {
       offset: Math.round(linear(ratio, SC.d[3], NSC.d[3]) * 100) / 100
     },
   ];
-  sky.updateDraw(width, height, gradients);
+  sky.updateDraw(width, height, groundHeight, gradients);
   // sun.updateGraphic(['#f9f4e3', '#f9efd9']);
   sun.updateFilterDisplacement(powerDisplacement);
   sun.updateBloom({

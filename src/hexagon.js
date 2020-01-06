@@ -37,7 +37,7 @@ export class Hexagon {
    * @return {Hexagon}
    */
   createNextHexagon(cube) {
-    return new Hexagon(this.x + (this.width / 2) * (cube.y - cube.x),
+    return new Hexagon(this.x + (this.width / 2) * ( cube.x - cube.y),
       this.y + (this.height * 3 / 4) * cube.z,
       this.radius, cube)
   }
