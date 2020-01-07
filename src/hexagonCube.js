@@ -14,7 +14,7 @@ export const HexagonDirection = [
  * @constructor
  */
 export const AxialToCube = (col, row) => {
-  const x = col - (row - (row & 1)) / 2;
+  const x = col - (row + (row & 1)) / 2;
   const z = row;
   const y = -x - z;
   return new HexagonCube(x, y, z)
