@@ -16,9 +16,7 @@ const resizeListeners = [];
 const app = new Application({
   width,
   height,
-  transparent: true,
-  autoDensity: true,
-  resolution: window.devicePixelRatio || 1
+  transparent: true
 });
 document.getElementById('scene').appendChild(app.view);
 
