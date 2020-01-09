@@ -27,6 +27,7 @@ export class Sun {
     });
     this.sunGraphic.filters = [this.displacementFilter, this.bloomFilter];
     this.updateFilterDisplacement(0);
+    this.sprite.pivot.set(0.5,0.5);
     this.sprite.addChild(this.sunGraphic);
     this.sprite.addChild(displacementSprite);
 

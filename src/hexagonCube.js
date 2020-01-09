@@ -1,11 +1,28 @@
-export const HexagonDirection = [
-  'southWest',
-  'west',
-  'northWest',
-  'northEast',
-  'east',
-  'southEast',
-];
+/**
+ * @typedef HexagonDirection
+ * @property {'southWest' | 'west' | 'northWest' | 'northEast' | 'east' | 'southEast'} HexagonDirection
+ */
+/**
+ *
+ * @param {string} direction
+ */
+export const OppositeDirection = (direction) => {
+  switch (direction) {
+    case 'east':
+      return 'west';
+    case 'northEast':
+      return 'southWest';
+    case 'southWest':
+      return 'northEast';
+    case 'northWest':
+      return 'southEast';
+    case 'southEast':
+      return 'northWest';
+    case 'west':
+      return 'east';
+    default:
+  }
+};
 /**
  *
  * @param {number} col
@@ -21,7 +38,7 @@ export const AxialToCube = (col, row) => {
 };
 /**
  * @param {HexagonCube} cube
- * @param {'southWest','west','northWest','northEast','east','southEast'} direction
+ * @param {string} direction
  * @param {number} distance
  * @returns {HexagonCube}
  */
@@ -125,6 +142,15 @@ export const lineCube = (start, end) => {
 export const equalCube = (a, b) => {
   return a.x === b.x && a.y === b.y && a.z === b.z;
 };
+
+const hexagonDirections = [
+  'southWest',
+  'west',
+  'northWest',
+  'northEast',
+  'east',
+  'southEast',
+];
 /**
  *
  * @param {HexagonCube}cube
@@ -140,7 +166,7 @@ export const circleCube = (cube, start, end) => {
   const result = [];
   for (let radius = start; radius <= end; radius++) {
     let next = CubeDirection(cube, 'east', radius);
-    HexagonDirection.forEach((dir) => {
+    hexagonDirections.forEach((dir) => {
       for (let i = 0; i < radius; i++) {
         next = CubeDirection(cube, dir, 1);
         result.push(next);

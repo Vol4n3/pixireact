@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {Application, Container} from 'pixi.js';
+import {Application, BaseTexture, Container, Rectangle, Texture} from 'pixi.js';
+import * as Filters from 'pixi-filters';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
 import {HexagonGrid} from './hexagonGrid';
+import {Entity} from './entity';
+import {Linear} from './helper/easing';
+import {ArrowTarget} from './arrow-target';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
+
 const padding = 0;
 let width = window.innerWidth + padding;
 let height = window.innerHeight + padding;
-const groundHeight = 375;
+const groundHeight = 450;
 const resizeListeners = [];
 const app = new Application({
   width,
@@ -31,7 +36,6 @@ window.addEventListener('resize', () => {
 
 const container = new Container();
 container.sortableChildren = true;
-
 const sky = new Sky(width, height, groundHeight);
 
 sky.sprite.zIndex = 1;
@@ -45,16 +49,68 @@ sun.sprite.position.set(width / 2 - 200, 0);
 container.addChild(sun.sprite);
 
 const ground = new Ground(width, height, groundHeight);
-ground.sprite.zIndex = 4;
+ground.container.zIndex = 4;
+ground.container.filters = [new Filters.AdjustmentFilter({
+  brightness: 0.5,
+})];
 resizeListeners.push(() => {
   ground.updateSize(width, height, groundHeight);
 });
-container.addChild(ground.sprite);
+container.addChild(ground.container);
 
 const hexagonMap = new HexagonGrid(width, height);
-hexagonMap.container.zIndex = 5;
-hexagonMap.container.position.set(50, 50 + height - groundHeight);
-container.addChild(hexagonMap.container);
+hexagonMap.container.position.set(100, 50);
+hexagonMap.container.zIndex = 2;
+ground.container.addChild(hexagonMap.container);
+
+const assets = new BaseTexture('./assets.png');
+const heroTexture = new Texture(assets, new Rectangle(0, 0, 120, 120));
+const hero = new Entity(app, heroTexture, hexagonMap.hexagons[0]);
+hexagonMap.container.addChild(hero.sprite);
+
+const otherHeroTexture = new Texture(assets, new Rectangle(120, 0, 120, 120));
+const otherHero = new Entity(app, otherHeroTexture, hexagonMap.hexagons[50]);
+
+hexagonMap.container.addChild(otherHero.sprite);
+
+hexagonMap.hexagons.forEach(h => h.clickListeners.push(async (hexagon) => {
+  const path = hexagonMap.findPath(hero.positionHexagon, hexagon, 3);
+  for (let i = 0; i < path.length; i++) {
+    await hero.moveTo(path[i], 10);
+  }
+}));
+const arrowTarget = new ArrowTarget();
+hexagonMap.container.addChild(arrowTarget.sprite);
+let haveHighlights = false;
+hexagonMap.hexagons.forEach(h => h.hoverListeners.push((hexagon) => {
+  if (haveHighlights) {
+    hexagonMap.hexagons.forEach(h => h.draw())
+  }
+  if (hexagon.attachedEntity) {
+    const canTarget = hexagonMap.rayTracing(hero.positionHexagon, hexagon);
+    const haveObstacle = canTarget.some(h => h.obstacle);
+    if (canTarget.length) {
+      if (haveObstacle) {
+        arrowTarget.draw(hero.sprite.position, hexagon.sprite.position, 0xffcc00)
+      } else {
+        arrowTarget.draw(hero.sprite.position, hexagon.sprite.position, 0x00ccff)
+      }
+    } else {
+
+    }
+    return;
+  }
+  arrowTarget.hide();
+  const canMove = hexagonMap.findPath(hero.positionHexagon, hexagon, 3);
+
+  if (canMove.length) {
+    canMove.forEach(h => h.draw(true));
+    haveHighlights = true;
+  } else {
+    haveHighlights = false;
+  }
+}));
+
 
 app.stage.addChild(container);
 
@@ -68,9 +124,7 @@ const minDistanceRangeLoop = (start, end, min, max) => {
   }
   return Math.abs(distanceA) < Math.abs(distanceB) ? distanceA : distanceB;
 };
-const linear = (ratio, start, desired) => {
-  return start + (desired - start) * ratio;
-};
+
 const getLinearHue = (ratio, start, desired) => {
   return Math.round(start + minDistanceRangeLoop(start, desired, 0, 360) * ratio);
 };
@@ -114,20 +168,17 @@ const updateSkySun = (sunPosition, powerDisplacement) => {
   const NSC = stepsSkyColors[nextStep];
   const gradients = [
     {
-      color: `hsl(${getLinearHue(ratio, SC.a[0], NSC.a[0])},${Math.round(linear(ratio, SC.a[1], NSC.a[1]))}%,${Math.round(linear(ratio, SC.a[2], NSC.a[2]))}%)`,
-      offset: Math.round(linear(ratio, SC.a[3], NSC.a[3]) * 100) / 100
-    },
-    {
-      color: `hsl(${getLinearHue(ratio, SC.b[0], NSC.b[0])},${Math.round(linear(ratio, SC.b[1], NSC.b[1]))}%,${Math.round(linear(ratio, SC.b[2], NSC.b[2]))}%)`,
-      offset: Math.round(linear(ratio, SC.b[3], NSC.b[3]) * 100) / 100
-    },
-    {
-      color: `hsl(${getLinearHue(ratio, SC.c[0], NSC.c[0])},${Math.round(linear(ratio, SC.c[1], NSC.c[1]))}%,${Math.round(linear(ratio, SC.c[2], NSC.c[2]))}%)`,
-      offset: Math.round(linear(ratio, SC.c[3], NSC.c[3]) * 100) / 100
-    },
-    {
-      color: `hsl(${getLinearHue(ratio, SC.d[0], NSC.d[0])},${Math.round(linear(ratio, SC.d[1], NSC.d[1]))}%,${Math.round(linear(ratio, SC.d[2], NSC.d[2]))}%)`,
-      offset: Math.round(linear(ratio, SC.d[3], NSC.d[3]) * 100) / 100
+      color: `hsl(${getLinearHue(ratio, SC.a[0], NSC.a[0])},${Math.round(Linear(ratio, SC.a[1], NSC.a[1]))}%,${Math.round(Linear(ratio, SC.a[2], NSC.a[2]))}%)`,
+      offset: Math.round(Linear(ratio, SC.a[3], NSC.a[3]) * 100) / 100
+    }, {
+      color: `hsl(${Linear(ratio, SC.b[0], NSC.b[0])},${Math.round(Linear(ratio, SC.b[1], NSC.b[1]))}%,${Math.round(Linear(ratio, SC.b[2], NSC.b[2]))}%)`,
+      offset: Math.round(Linear(ratio, SC.b[3], NSC.b[3]) * 100) / 100
+    }, {
+      color: `hsl(${getLinearHue(ratio, SC.c[0], NSC.c[0])},${Math.round(Linear(ratio, SC.c[1], NSC.c[1]))}%,${Math.round(Linear(ratio, SC.c[2], NSC.c[2]))}%)`,
+      offset: Math.round(Linear(ratio, SC.c[3], NSC.c[3]) * 100) / 100
+    }, {
+      color: `hsl(${getLinearHue(ratio, SC.d[0], NSC.d[0])},${Math.round(Linear(ratio, SC.d[1], NSC.d[1]))}%,${Math.round(Linear(ratio, SC.d[2], NSC.d[2]))}%)`,
+      offset: Math.round(Linear(ratio, SC.d[3], NSC.d[3]) * 100) / 100
     },
   ];
   sky.updateDraw(width, height, groundHeight, gradients);
@@ -152,7 +203,6 @@ app.ticker.add(() => {
   }
   count++;
   if (count > 2) {
-    document.body.className = `sky-gradient-${Math.round(sun.sprite.position.y / 100)}`;
     updateSkySun(sun.sprite.position.y, 0);
     count = 0;
   }
