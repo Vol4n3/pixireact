@@ -2,19 +2,25 @@ import {Graphics} from "pixi.js";
 import {CreateGradient} from './helper/gradient';
 
 export class Sky {
-  constructor(width, height,groundHeight) {
+
+  constructor(game,container) {
     this.sprite = new Graphics();
-    this.updateDraw(width, height, groundHeight,[{color : '#6bddff',offset: 0},{color : '#fde4da',offset: 1}]);
+    this.groundHeight = game.groundHeight;
+    this.updateDraw(game.width, game.height,[{color : '#6bddff',offset: 0},{color : '#fde4da',offset: 1}]);
+    container.addChild(this.sprite);
+    game.resizeListeners.push((width,height) => {
+      this.updateDraw(width, height);
+    });
   }
 
-  updateDraw(width, height, groundHeight,colors) {
+  updateDraw(width, height,colors) {
     if (colors) {
       this.colors = colors
     }
     this.sprite.clear();
     this.texture = CreateGradient(height * 2, this.colors);
     this.sprite.beginTextureFill({texture: this.texture});
-    this.sprite.drawRect(0, 0, width, height - groundHeight);
+    this.sprite.drawRect(0, 0, width, height - this.groundHeight);
     this.sprite.endFill();
   }
 }
