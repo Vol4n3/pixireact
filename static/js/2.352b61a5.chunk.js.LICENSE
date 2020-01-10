@@ -39,14 +39,6 @@
  */
 
 /*!
- * @pixi/ticker - v5.2.0
- * Compiled Wed, 06 Nov 2019 02:32:43 UTC
- *
- * @pixi/ticker is licensed under the MIT License.
- * http://www.opensource.org/licenses/mit-license
- */
-
-/*!
  * @pixi/interaction - v5.2.0
  * Compiled Wed, 06 Nov 2019 02:32:43 UTC
  *
@@ -144,24 +136,18 @@
  */
 
 /*!
+ * @pixi/ticker - v5.2.0
+ * Compiled Wed, 06 Nov 2019 02:32:43 UTC
+ *
+ * @pixi/ticker is licensed under the MIT License.
+ * http://www.opensource.org/licenses/mit-license
+ */
+
+/*!
  * @pixi/runner - v5.2.0
  * Compiled Wed, 06 Nov 2019 02:32:43 UTC
  *
  * @pixi/runner is licensed under the MIT License.
- * http://www.opensource.org/licenses/mit-license
- */
-
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-/*!
- * @pixi/filter-alpha - v5.2.0
- * Compiled Wed, 06 Nov 2019 02:32:43 UTC
- *
- * @pixi/filter-alpha is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 
@@ -186,6 +172,20 @@ object-assign
  * Compiled Wed, 29 May 2019 03:04:05 UTC
  *
  * @pixi/filter-pixelate is licensed under the MIT License.
+ * http://www.opensource.org/licenses/mit-license
+ */
+
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+/*!
+ * @pixi/filter-alpha - v5.2.0
+ * Compiled Wed, 06 Nov 2019 02:32:43 UTC
+ *
+ * @pixi/filter-alpha is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 

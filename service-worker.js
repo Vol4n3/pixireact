@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/pixireact/precache-manifest.bc898bba0ff3bbc2d0dad459225dc57e.js"
+  "/pixireact/precache-manifest.4a3e0ba79367c6648ca7354f7d9442e8.js"
 );
 
 self.addEventListener('message', (event) => {
