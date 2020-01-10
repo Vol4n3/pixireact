@@ -16,7 +16,7 @@ export class Sun {
     this.sunGraphic = new Graphics();
     this.sprite.position.set(this._radius * 2 + game.padding, this._radius * 2 + game.padding);
     this.angle = Math.PI * 2;
-    this.origin = {x: game.width / 2, y: game.height + game.padding};
+    this.origin = {x: game.width / 2, y: game.height - game.groundHeight + 200};
     this.ellipseX = game.width / 3;
     this.ellipseY = game.height * 1.5;
     this.updatePosition();
@@ -42,7 +42,7 @@ export class Sun {
       if (this.angle < 0) {
         this.angle += Math.PI * 2;
       }
-      this.angle -= 0.01;
+      this.angle -= 0.0001;
       this.updatePosition();
       displacementSprite.x += 0.1;
       displacementSprite.y += 0.1;
@@ -86,6 +86,12 @@ export class Sun {
     this.displacementFilter.scale.y = this.power;
   }
 
+  /**
+   * @param {Object[]} colors
+   * @param {string} colors.color
+   * @param {number} colors.offset
+   * @param radius
+   */
   updateGraphic(colors, radius) {
     if (colors) {
       this._texture = CreateGradient(this._radius * 2, colors);

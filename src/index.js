@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {BaseTexture, Container, Rectangle, Texture} from 'pixi.js';
-import * as Filters from 'pixi-filters';
+import {BaseTexture, Container, Graphics, Rectangle, Texture} from 'pixi.js';
+import {AdjustmentFilter, SimpleLightmapFilter} from 'pixi-filters';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
@@ -29,7 +29,7 @@ sun.sprite.zIndex = 2;
 // ground
 const ground = new Ground(game, container);
 ground.container.zIndex = 4;
-const adjustmentFilter = new Filters.AdjustmentFilter({brightness: 0.9,});
+const adjustmentFilter = new AdjustmentFilter({brightness: 0.9,});
 ground.container.filters = [adjustmentFilter];
 container.addChild(ground.container);
 // map
@@ -90,11 +90,20 @@ hexagonGrid.hexagons.forEach(h => h.hoverListeners.push((hexagon) => {
     haveHighlights = false;
   }
 }));
+const light = new Graphics();
 
+light.beginFill(0xfff883, 0.5);
+light.drawCircle(0, 0, 1);
+light.position.set(game.width / 2 , game.height / 2 +200);
+const bloom = new SimpleLightmapFilter({
+});
+bloom.padding = 500;
+light.filters = [bloom];
+light.zIndex = 10;
+container.addChild(light);
 
 // sky update
 const stepsSkyColors = [
-  [[240, 18, 31, 0], [238, 26, 55, 0.8], [238, 26, 55, 0.8], [263, 24, 57, 1]], // 4
   [[242, 18, 35, 0], [238, 26, 55, 0.5], [238, 26, 55, 0.5], [336, 43, 66, 1]], // 5
   [[236, 37, 60, 0], [242, 31, 63, 0.6], [242, 31, 63, 0.6], [326, 58, 80, 1]], // 6
   [[211, 55, 68, 0], [211, 55, 68, 0], [211, 55, 68, 0], [1, 59, 81, 1]], // 7
@@ -118,16 +127,20 @@ const stepsSkyColors = [
   [[244, 89, 4, 0], [244, 89, 4, 0], [244, 89, 4, 0.6], [240, 16, 15, 1]], // 1
   [[244, 89, 4, 0], [244, 89, 4, 0], [244, 89, 4, 0.1], [240, 17, 27, 1]], // 2
   [[240, 16, 15, 0], [240, 16, 15, 0], [240, 16, 15, 0], [240, 18, 39, 1]], // 3
+  [[240, 18, 31, 0], [238, 26, 55, 0.8], [238, 26, 55, 0.8], [263, 24, 57, 1]], // 4
+
+
 ];
 const updateSkySun = () => {
   let sunlight = Math.PI * 2 - sun.angle;
-  let heightSunRatio =  sun.sprite.position.y / sun.origin.y;
-  heightSunRatio = ( heightSunRatio < 0 ) ? 0 : heightSunRatio > 0.8 ? 0.8 : heightSunRatio;
-  adjustmentFilter.brightness =  1 - heightSunRatio;
+  let heightSunRatio = sun.sprite.position.y / (sun.origin.y + 700);
+  heightSunRatio = (heightSunRatio < 0) ? 0 : heightSunRatio > 0.9 ? 0.9 : heightSunRatio;
+  adjustmentFilter.brightness = 1 - heightSunRatio;
   const division = Math.PI * 2 / 24;
   if (sunlight < 0) {
     sunlight = 0;
   }
+
   const ratio = (sunlight % division) / division;
   let step = Math.floor(sunlight / division);
   step = (step < 0) ? stepsSkyColors.length - 1 : (step > stepsSkyColors.length - 1) ? 0 : step;
@@ -136,27 +149,37 @@ const updateSkySun = () => {
   const SC = stepsSkyColors[step];
   const NSC = stepsSkyColors[nextStep];
   const gradients = [];
-  for (let i = 0; i < 4 ; i++) {
+  for (let i = 0; i < 4; i++) {
     gradients.push({
       color: `hsl(${LinearHue(ratio, SC[i][0], NSC[i][0])},${Math.round(Linear(ratio, SC[i][1], NSC[i][1]))}%,${Math.round(Linear(ratio, SC[i][2], NSC[i][2]))}%)`,
       offset: Math.round(Linear(ratio, SC[i][3], NSC[i][3]) * 100) / 100
     })
   }
   sky.updateDraw(game.width, game.height, gradients);
-  // sun.updateGraphic(['#f9f4e3', '#f9efd9']);
-  sun.updateFilterDisplacement(0);
+  if (sun.sprite.position.x - sun.origin.x < 0) {
+    sun.updateGraphic([{color: 'hsl(355,87%,82%)', offset: 0}, {
+      color: 'hsl(320,100%,87%)',
+      offset: 1
+    }, {color: 'hsl(284,100%,86%)', offset: 1}]);
+  } else {
+    sun.updateGraphic([{color: 'hsl(56,87%,83%)', offset: 0}, {
+      color: 'hsl(30,87%,82%)',
+      offset: 0.5
+    }, {color: 'hsl(18,100%,76%)', offset: 1}]);
+  }
+  sun.updateFilterDisplacement(heightSunRatio * 400);
   sun.updateBloom({
-    threshold: 0.15,
-    bloomScale: 2.5,
+    threshold: (1 - heightSunRatio) * 0.15,
+    bloomScale: (1 - heightSunRatio) * 2.5,
     brightness: 0.8,
-    blur: 40,
+    blur: (1 - heightSunRatio) * 40,
     quality: 10
   })
 };
 let count = 0;
 game.app.ticker.add(() => {
   count++;
-  if (count > 3) {
+  if (count > 5) {
     updateSkySun();
     count = 0;
   }

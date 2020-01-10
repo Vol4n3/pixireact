@@ -13,6 +13,14 @@ export class Sky {
     });
   }
 
+  /**
+   *
+   * @param width
+   * @param height
+   * @param {Object[]} colors
+   * @param {string} colors.color
+   * @param {number} colors.offset
+   */
   updateDraw(width, height,colors) {
     if (colors) {
       this.colors = colors
