@@ -46,11 +46,11 @@ export class Hexagon {
   }
 
   get height() {
-    return 2 * this.radius + 10;
+    return 2 * this.radius + this.radius/3;
   }
 
   get width() {
-    return Math.sqrt(3) * this.radius + 10;
+    return Math.sqrt(3) * this.radius + this.radius/3;
   }
 
   /**

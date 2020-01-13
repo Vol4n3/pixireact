@@ -8,8 +8,9 @@ export class Sky {
     this.groundHeight = game.groundHeight;
     this.updateDraw(game.width, game.height,[{color : '#6bddff',offset: 0},{color : '#fde4da',offset: 1}]);
     container.addChild(this.sprite);
-    game.resizeListeners.push((width,height) => {
-      this.updateDraw(width, height);
+    game.resizeListeners.push((changes) => {
+      this.groundHeight = changes.groundHeight;
+      this.updateDraw(changes.width, changes.height);
     });
   }
 
@@ -17,7 +18,7 @@ export class Sky {
    *
    * @param width
    * @param height
-   * @param {Object[]} colors
+   * @param {Object[]} [colors]
    * @param {string} colors.color
    * @param {number} colors.offset
    */

@@ -40,10 +40,10 @@ export class HexagonGrid {
    */
   hexagons = [];
 
-  constructor() {
+  constructor(game,container) {
     this.container = new Container();
     this.container.sortableChildren = true;
-    const base = new Hexagon(0, 0, 40, AxialToCube(0, 0));
+    const base = new Hexagon(0, 0, game.groundHeight/20, AxialToCube(0, 0));
     this.hexagons.push(base);
     const maxRow = 5;
     const maxCols = 20;
@@ -58,6 +58,7 @@ export class HexagonGrid {
       }
     }
     this.container.addChild(...this.hexagons.map(h => h.sprite));
+    container.addChild(this.container);
   }
 
   rayTracing(startHexagon, endHexagon) {

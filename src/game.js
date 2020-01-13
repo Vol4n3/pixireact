@@ -2,12 +2,20 @@ import {Application} from "pixi.js";
 
 export class Game {
   padding = 200;
-  groundHeight = 450;
   height = window.innerHeight + this.padding;
   width = window.innerWidth + this.padding;
+  groundHeight = this.height / 2;
   rRef = this.resize.bind(this);
+
   /**
-   * @type {function(number,number)[]}
+   * @typedef changes
+   * @type {object}
+   * @property {number} width
+   * @property {number} height
+   * @property {number} groundHeight
+   */
+  /**
+   * @type {function(changes)[]}
    */
   resizeListeners = [];
 
@@ -24,9 +32,10 @@ export class Game {
   resize() {
     this.width = window.innerWidth + this.padding;
     this.height = window.innerHeight + this.padding;
+    this.groundHeight = this.height / 2;
     this.app.renderer.resize(this.width, this.height);
     this.resizeListeners.forEach((listener) => {
-      listener(this.width, this.height);
+      listener({width:this.width, height:this.height, groundHeight:this.groundHeight});
     })
   }
 }

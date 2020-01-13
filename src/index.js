@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {BaseTexture, Container, Graphics, Rectangle, Texture} from 'pixi.js';
-import {AdjustmentFilter, SimpleLightmapFilter} from 'pixi-filters';
+import {BaseTexture, Container, Rectangle, Texture} from 'pixi.js';
+import {AdjustmentFilter} from 'pixi-filters';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
@@ -29,14 +29,15 @@ sun.sprite.zIndex = 2;
 // ground
 const ground = new Ground(game, container);
 ground.container.zIndex = 4;
+
 const adjustmentFilter = new AdjustmentFilter({brightness: 0.9,});
 ground.container.filters = [adjustmentFilter];
 container.addChild(ground.container);
 // map
-const hexagonGrid = new HexagonGrid(game.width, game.height);
-hexagonGrid.container.position.set(100, 50);
+const hexagonGrid = new HexagonGrid(game,ground.container);
+hexagonGrid.container.position.set(game.width / 12, game.height / 25);
 hexagonGrid.container.zIndex = 2;
-ground.container.addChild(hexagonGrid.container);
+
 
 // entities
 const assets = new BaseTexture('./assets.png');
@@ -90,17 +91,7 @@ hexagonGrid.hexagons.forEach(h => h.hoverListeners.push((hexagon) => {
     haveHighlights = false;
   }
 }));
-const light = new Graphics();
 
-light.beginFill(0xfff883, 0.5);
-light.drawCircle(0, 0, 1);
-light.position.set(game.width / 2 , game.height / 2 +200);
-const bloom = new SimpleLightmapFilter({
-});
-bloom.padding = 500;
-light.filters = [bloom];
-light.zIndex = 10;
-container.addChild(light);
 
 // sky update
 const stepsSkyColors = [

@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://vol4n3.github.io/pixireact/",
   "dependencies": {
-    "gh-pages": "^2.1.1",
+    "gh-pages": "^2.2.0",
     "pixi-filters": "^3.0.3",
     "pixi.js": "^5.2.0",
     "react": "^16.12.0",
