@@ -12,10 +12,6 @@ export class Ground {
     this.container.addChild(this.sprite);
 
     container.addChild(this.container);
-
-    game.resizeListeners.push((changes) => {
-      this.updateSize(changes.width, changes.height,changes.groundHeight);
-    });
   }
 
   updateSize(width, height,groundHeight) {

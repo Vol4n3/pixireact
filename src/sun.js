@@ -50,10 +50,6 @@ export class Sun {
       if (displacementSprite.y > displacementSprite.height) displacementSprite.y = 0;
     });
   }
-  updatePosition(){
-    const position = Ellipse(this.ellipseX, this.ellipseY, this.origin, this.angle);
-    this.sprite.position.set(position.x, position.y);
-  }
 
   /**
    *
@@ -104,5 +100,10 @@ export class Sun {
     this.sunGraphic.drawCircle(0, 0, this._radius);
     this.sunGraphic.endFill();
     this.updateFilterDisplacement();
+  }
+
+  updatePosition(){
+    const position = Ellipse(this.ellipseX, this.ellipseY, this.origin, this.angle);
+    this.sprite.position.set(position.x, position.y);
   }
 }

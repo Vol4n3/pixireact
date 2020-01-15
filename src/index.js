@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {BaseTexture, Container, Rectangle, Texture} from 'pixi.js';
-import {AdjustmentFilter} from 'pixi-filters';
+import {BaseTexture, Container, Rectangle, Texture, Graphics,filters,utils} from 'pixi.js';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
@@ -12,8 +11,21 @@ import {Linear} from './helper/easing';
 import {ArrowTarget} from './arrow-target';
 import {LinearHue} from './helper/utils';
 import {Game} from './game';
+import {LightPointFilter} from './light-point.filter';
+import {AmbientFilter} from './ambient.filter';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
+
+//socket
+const socketUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8854/' : '';
+const script = document.createElement('script');
+let socket;
+script.async = true;
+script.src = socketUrl + 'socket.io/socket.io.js';
+script.onload =  ()=>{
+  socket = window.io(socketUrl);
+};
+document.head.appendChild(script);
 // config app
 const game = new Game();
 // global container
@@ -30,11 +42,13 @@ sun.sprite.zIndex = 2;
 const ground = new Ground(game, container);
 ground.container.zIndex = 4;
 
-const adjustmentFilter = new AdjustmentFilter({brightness: 0.9,});
-ground.container.filters = [adjustmentFilter];
+const ambient = 0x333333;
+const lightFilter = new LightPointFilter({ambient});
+const ambientFilter = new AmbientFilter({ambient});
+container.filters = [ambientFilter,lightFilter];
 container.addChild(ground.container);
 // map
-const hexagonGrid = new HexagonGrid(game,ground.container);
+const hexagonGrid = new HexagonGrid(game, ground.container);
 hexagonGrid.container.position.set(game.width / 12, game.height / 25);
 hexagonGrid.container.zIndex = 2;
 
@@ -91,7 +105,19 @@ hexagonGrid.hexagons.forEach(h => h.hoverListeners.push((hexagon) => {
     haveHighlights = false;
   }
 }));
+const light = new Graphics();
+light.beginFill(0xffffff,0.2);
+light.drawEllipse(0, 0, 75, 30);
+//light.blendMode = BLEND_MODES.MULTIPLY;
 
+const eropos = otherHero.sprite.getGlobalPosition();
+light.position.set(eropos.x, eropos.y);
+
+const blur = new filters.BlurFilter(10);
+
+light.filters = [blur];
+light.zIndex = 10;
+//container.addChild(light);
 
 // sky update
 const stepsSkyColors = [
@@ -125,8 +151,11 @@ const stepsSkyColors = [
 const updateSkySun = () => {
   let sunlight = Math.PI * 2 - sun.angle;
   let heightSunRatio = sun.sprite.position.y / (sun.origin.y + 700);
-  heightSunRatio = (heightSunRatio < 0) ? 0 : heightSunRatio > 0.9 ? 0.9 : heightSunRatio;
-  adjustmentFilter.brightness = 1 - heightSunRatio;
+  heightSunRatio = (heightSunRatio < 0) ? 0 : heightSunRatio > 0.3 ? 0.3 : heightSunRatio;
+  const ambientRation = heightSunRatio;
+  const ambientNight = utils.rgb2hex([ambientRation,ambientRation,ambientRation]);
+  ambientFilter.ambient = ambientNight;
+  lightFilter.ambient = ambientNight;
   const division = Math.PI * 2 / 24;
   if (sunlight < 0) {
     sunlight = 0;
