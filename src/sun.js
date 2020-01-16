@@ -42,7 +42,7 @@ export class Sun {
       if (this.angle < 0) {
         this.angle += Math.PI * 2;
       }
-      this.angle -= 0.001;
+      this.angle -= 0.01;
       this.updatePosition();
       displacementSprite.x += 0.1;
       displacementSprite.y += 0.1;

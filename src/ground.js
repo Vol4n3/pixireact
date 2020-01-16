@@ -1,4 +1,4 @@
-import {Container, Graphics, filters} from "pixi.js";
+import {Container, Graphics} from "pixi.js";
 
 export class Ground {
   groundHeight;
@@ -10,12 +10,11 @@ export class Ground {
     this.sprite.zIndex = 1;
     this.updateSize(game.width, game.height,game.groundHeight);
     this.container.addChild(this.sprite);
-
     container.addChild(this.container);
   }
 
   updateSize(width, height,groundHeight) {
-    this.container.position.y = height- groundHeight;
+    this.container.position.y = height - groundHeight;
     this.sprite.clear();
     // grass
     this.sprite.beginFill(0x1d8e26);

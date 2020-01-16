@@ -1,7 +1,7 @@
 import {Filter, utils} from 'pixi.js';
 import {Vertex} from './helper/vertex';
 
-const fragment = `precision highp float;
+const fragment = `precision mediump float;
 varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 uniform vec4 filterArea;
@@ -32,7 +32,7 @@ export class LightPointFilter extends Filter {
     this.uniforms.uEllipse = new Float32Array(2);
     this.uniforms.uPos = new Float32Array(2);
     this.uniforms.uAmbient = new Float32Array(3);
-    this.position = options.position || {x: 800, y: 750};
+    this.position = options.position || {x: 30, y: 750};
     this.color = options.color || 0x111111;
     this.ellipse = options.ellipse || {width: 300, height: 200};
     this.ambient = options.ambient || 0x222222;

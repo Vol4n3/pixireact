@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {BaseTexture, Container, Rectangle, Texture, Graphics,filters,utils} from 'pixi.js';
+import {BaseTexture, Container, Rectangle, Texture, Graphics,filters,utils, Sprite} from 'pixi.js';
 import {Sun} from './sun';
 import {Ground} from './ground';
 import {Sky} from './sky';
@@ -39,14 +39,18 @@ sky.sprite.zIndex = 1;
 const sun = new Sun(game, container, 75);
 sun.sprite.zIndex = 2;
 // ground
-const ground = new Ground(game, container);
-ground.container.zIndex = 4;
-
+const containerObject = new Container();
+containerObject.zIndex = 4;
 const ambient = 0x444444;
-const lightFilter = new LightPointFilter({ambient});
 const ambientFilter = new AmbientFilter({ambient});
-container.filters = [ambientFilter,lightFilter];
-container.addChild(ground.container);
+const lightFilter = new LightPointFilter({ambient});
+const lightFilter2 = new LightPointFilter({ambient});
+lightFilter2.position.x = 900;
+containerObject.filters =  [ambientFilter,lightFilter];
+container.addChild(containerObject);
+const background = new Sprite();
+containerObject.addChild(background);
+const ground = new Ground(game, containerObject);
 // map
 const hexagonGrid = new HexagonGrid(game, ground.container);
 hexagonGrid.container.position.set(game.width / 12, game.height / 25);
@@ -151,11 +155,12 @@ const stepsSkyColors = [
 const updateSkySun = () => {
   let sunlight = Math.PI * 2 - sun.angle;
   let heightSunRatio = sun.sprite.position.y / (sun.origin.y + 700);
-  heightSunRatio = (heightSunRatio < 0) ? 0 : heightSunRatio > 0.3 ? 0.3 : heightSunRatio;
+  heightSunRatio = (heightSunRatio < 0) ? 0 : heightSunRatio > 0.4 ? 0.4 : heightSunRatio;
   const ambientRation = heightSunRatio;
   const ambientNight = utils.rgb2hex([ambientRation,ambientRation,ambientRation]);
   ambientFilter.ambient = ambientNight;
   lightFilter.ambient = ambientNight;
+  lightFilter2.ambient = ambientNight;
   const division = Math.PI * 2 / 24;
   if (sunlight < 0) {
     sunlight = 0;
