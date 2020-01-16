@@ -42,7 +42,7 @@ sun.sprite.zIndex = 2;
 const ground = new Ground(game, container);
 ground.container.zIndex = 4;
 
-const ambient = 0x333333;
+const ambient = 0x444444;
 const lightFilter = new LightPointFilter({ambient});
 const ambientFilter = new AmbientFilter({ambient});
 container.filters = [ambientFilter,lightFilter];

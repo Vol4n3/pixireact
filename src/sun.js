@@ -15,7 +15,7 @@ export class Sun {
     this.sprite = new Container();
     this.sunGraphic = new Graphics();
     this.sprite.position.set(this._radius * 2 + game.padding, this._radius * 2 + game.padding);
-    this.angle = Math.PI * 2;
+    this.angle = Math.PI ;
     this.origin = {x: game.width / 2, y: game.height - game.groundHeight  };
     this.ellipseX = game.width / 4;
     this.ellipseY = game.height * 1.5;
