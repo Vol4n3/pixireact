@@ -31,14 +31,6 @@
  */
 
 /*!
- * @pixi/display - v5.2.0
- * Compiled Wed, 06 Nov 2019 02:32:43 UTC
- *
- * @pixi/display is licensed under the MIT License.
- * http://www.opensource.org/licenses/mit-license
- */
-
-/*!
  * @pixi/interaction - v5.2.0
  * Compiled Wed, 06 Nov 2019 02:32:43 UTC
  *
@@ -132,6 +124,14 @@
  * Compiled Wed, 06 Nov 2019 02:32:43 UTC
  *
  * @pixi/mesh is licensed under the MIT License.
+ * http://www.opensource.org/licenses/mit-license
+ */
+
+/*!
+ * @pixi/display - v5.2.0
+ * Compiled Wed, 06 Nov 2019 02:32:43 UTC
+ *
+ * @pixi/display is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license
  */
 
