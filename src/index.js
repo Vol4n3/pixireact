@@ -17,7 +17,7 @@ import {AmbientFilter} from './ambient.filter';
 ReactDOM.render(<App/>, document.getElementById('root'));
 
 //socket
-const socketUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8854/' : '';
+const socketUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8854/' : 'http://comuty.fr:8854/';
 const script = document.createElement('script');
 let socket;
 script.async = true;
