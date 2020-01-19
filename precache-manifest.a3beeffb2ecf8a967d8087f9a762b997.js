@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fc6761fee4bd417b14cad4cd2c5a92ea",
+    "revision": "e2aa68d4d02d7d055594aa83d9ff0c98",
     "url": "/pixireact/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pixireact/static/js/2.34f75c0c.chunk.js.LICENSE"
   },
   {
-    "revision": "7bae4644438d781c36d0",
-    "url": "/pixireact/static/js/main.89649c65.chunk.js"
+    "revision": "adf431114e1c9edc382d",
+    "url": "/pixireact/static/js/main.29852030.chunk.js"
   },
   {
     "revision": "c17a6709b96c97d3282e",

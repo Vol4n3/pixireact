@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/pixireact/static/js/main.89649c65.chunk.js",
-    "main.js.map": "/pixireact/static/js/main.89649c65.chunk.js.map",
+    "main.js": "/pixireact/static/js/main.29852030.chunk.js",
+    "main.js.map": "/pixireact/static/js/main.29852030.chunk.js.map",
     "runtime-main.js": "/pixireact/static/js/runtime-main.04f04656.js",
     "runtime-main.js.map": "/pixireact/static/js/runtime-main.04f04656.js.map",
     "static/js/2.34f75c0c.chunk.js": "/pixireact/static/js/2.34f75c0c.chunk.js",
     "static/js/2.34f75c0c.chunk.js.map": "/pixireact/static/js/2.34f75c0c.chunk.js.map",
     "index.html": "/pixireact/index.html",
-    "precache-manifest.e4cc10490cd4ad5bb3b49b33beaf1994.js": "/pixireact/precache-manifest.e4cc10490cd4ad5bb3b49b33beaf1994.js",
+    "precache-manifest.a3beeffb2ecf8a967d8087f9a762b997.js": "/pixireact/precache-manifest.a3beeffb2ecf8a967d8087f9a762b997.js",
     "service-worker.js": "/pixireact/service-worker.js",
     "static/js/2.34f75c0c.chunk.js.LICENSE": "/pixireact/static/js/2.34f75c0c.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.04f04656.js",
     "static/js/2.34f75c0c.chunk.js",
-    "static/js/main.89649c65.chunk.js"
+    "static/js/main.29852030.chunk.js"
   ]
 }
