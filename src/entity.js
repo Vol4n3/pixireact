@@ -20,6 +20,7 @@ export class Entity {
     this.sprite = new Sprite(texture);
     this.sprite.anchor.set(0.5, 1);
     this.positionHexagon = hexagon;
+    this.sprite.zIndex = hexagon.cube.z;
     hexagon.attachedEntity = this;
     const firstCell = hexagon.sprite.position;
     this.sprite.position.set(firstCell.x, firstCell.y);

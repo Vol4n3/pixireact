@@ -75,7 +75,7 @@ export class HexagonGrid {
    * @return {Hexagon[]}
    */
   findPath(startHexagon, endHexagon, movement, randomize) {
-    const reachable = this.reachable(startHexagon, movement * 3, randomize);
+    const reachable = this.reachable(startHexagon,  randomize);
     let destination = FindReachable(reachable.hexagonsMapReachable, endHexagon.cube);
     const path = [];
     if (!destination.cameFromDirection || !destination.hexagon.canMoveInto || destination.hexagon.obstacle) {
@@ -100,7 +100,7 @@ export class HexagonGrid {
    * @param {number}movement
    * @param {boolean} [randomize]
    */
-  reachable(startHexagon, movement, randomize) {
+  reachable(startHexagon, randomize) {
     const hexagonsMapReachable = this.hexagons.map(hexagon => ({
       hexagon
     }));
@@ -120,7 +120,7 @@ export class HexagonGrid {
     if (randomize) {
       hexagonDirections = shuffle(hexagonDirections)
     }
-    for (let i = 1; i < movement; i++) {
+    for (let i = 1; i < this.hexagons.length; i++) {
       fringes.push([]);
       fringes[i - 1].forEach(hexagonReachable => {
         hexagonDirections.forEach(direction => {

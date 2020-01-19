@@ -4,7 +4,7 @@ export class Game {
   padding = 200;
   height = window.innerHeight + this.padding;
   width = window.innerWidth + this.padding;
-  groundHeight = this.height / 2;
+  groundHeight = this.height / 1.5;
 
   constructor() {
     this.app = new Application({

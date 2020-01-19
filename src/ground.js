@@ -22,7 +22,7 @@ export class Ground {
     this.sprite.endFill();
     // dirt
     this.sprite.beginFill(0x865c38);
-    this.sprite.drawRect(0, groundHeight / 2, width, groundHeight);
+    this.sprite.drawRect(0, groundHeight / 1.5, width, groundHeight);
     this.sprite.endFill();
   }
 }

@@ -73,6 +73,7 @@ hexagonGrid.hexagons.forEach(h => h.clickListeners.push(async (hexagon) => {
   const path = hexagonGrid.findPath(hero.positionHexagon, hexagon, 3);
   for (let i = 0; i < path.length; i++) {
     await hero.moveTo(path[i], 10);
+    hexagonGrid.container.sortChildren()
   }
 }));
 // arrow
