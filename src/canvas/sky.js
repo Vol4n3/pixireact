@@ -1,5 +1,5 @@
 import {Sprite} from "pixi.js";
-import {CreateGradient} from './helper/gradient';
+import {CreateGradient} from '../helper/gradient';
 
 export class Sky {
 

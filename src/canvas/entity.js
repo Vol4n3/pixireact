@@ -1,5 +1,5 @@
 import {Sprite} from "pixi.js";
-import {EaseOutCubic} from './helper/easing';
+import {EaseOutCubic, Linear} from '../helper/easing';
 
 export class Entity {
   type;
@@ -63,8 +63,8 @@ export class Entity {
       return;
     }
     const transition = {
-      x: EaseOutCubic(this.moveTick / this.maxTicks, this.start.x, this.direction.x),
-      y: EaseOutCubic(this.moveTick / this.maxTicks, this.start.y, this.direction.y)
+      x: Linear(this.moveTick / this.maxTicks, this.start.x, this.direction.x),
+      y: Linear(this.moveTick / this.maxTicks, this.start.y, this.direction.y)
     };
     this.sprite.position.set(transition.x, transition.y);
     this.moveTick++;

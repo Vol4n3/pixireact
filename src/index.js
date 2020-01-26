@@ -1,42 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './ui/App';
 import {BaseTexture, Container, Rectangle, Texture, Graphics,filters,utils, Sprite} from 'pixi.js';
-import {Sun} from './sun';
-import {Ground} from './ground';
-import {Sky} from './sky';
-import {HexagonGrid} from './hexagonGrid';
-import {Entity} from './entity';
+import {Sun} from './canvas/sun';
+import {Ground} from './canvas/ground';
+import {Sky} from './canvas/sky';
+import {HexagonGrid} from './canvas/hexagonGrid';
+import {Entity} from './canvas/entity';
 import {Linear} from './helper/easing';
-import {ArrowTarget} from './arrow-target';
+import {ArrowTarget} from './canvas/arrow-target';
 import {LinearHue} from './helper/utils';
-import {Game} from './game';
-import {LightPointFilter} from './light-point.filter';
-import {AmbientFilter} from './ambient.filter';
+import {Game} from './canvas/game';
+import {LightPointFilter} from './canvas/light-point.filter';
+import {AmbientFilter} from './canvas/ambient.filter';
+import socketResolver from './socket/socket';
+import Camera from './canvas/camera';
 
 ReactDOM.render(<App/>, document.getElementById('root'));
 
 //socket
-const socketUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8854/' : 'https://comuty.fr/';
-const script = document.createElement('script');
-let socket;
-script.async = true;
-script.src = socketUrl + 'socket.io/socket.io.js';
-script.onload =  ()=>{
-  socket = window.io(socketUrl);
-};
-document.head.appendChild(script);
+socketResolver.then(socket=>{
+  console.log('index');
+  socket.on('co',(data)=>{
+
+  });
+});
+
 // config app
 const game = new Game();
 // global container
-const container = new Container();
-container.sortableChildren = true;
-game.app.stage.addChild(container);
+const camera = new Camera(game);
+
+
 // sky
-const sky = new Sky(game, container);
+const sky = new Sky(game, camera.world);
 sky.sprite.zIndex = 1;
 // sun
-const sun = new Sun(game, container, 75);
+const sun = new Sun(game, camera.world, 75);
 sun.sprite.zIndex = 2;
 // ground
 const containerObject = new Container();
@@ -47,7 +47,7 @@ const lightFilter = new LightPointFilter({ambient});
 const lightFilter2 = new LightPointFilter({ambient});
 lightFilter2.position.x = 900;
 containerObject.filters =  [ambientFilter,lightFilter];
-container.addChild(containerObject);
+camera.world.addChild(containerObject);
 const background = new Sprite();
 containerObject.addChild(background);
 const ground = new Ground(game, containerObject);
@@ -63,6 +63,7 @@ const assets = new BaseTexture('./assets.png');
 const heroTexture = new Texture(assets, new Rectangle(0, 0, 120, 120));
 const hero = new Entity(game.app, heroTexture, hexagonGrid.hexagons[0]);
 hexagonGrid.container.addChild(hero.sprite);
+camera.follow = hero.sprite;
 // other
 const otherHeroTexture = new Texture(assets, new Rectangle(120, 0, 120, 120));
 const otherHero = new Entity(game.app, otherHeroTexture, hexagonGrid.hexagons[50]);
@@ -70,9 +71,9 @@ hexagonGrid.container.addChild(otherHero.sprite);
 
 // click events
 hexagonGrid.hexagons.forEach(h => h.clickListeners.push(async (hexagon) => {
-  const path = hexagonGrid.findPath(hero.positionHexagon, hexagon, 3);
+  const path = hexagonGrid.findPath(hero.positionHexagon, hexagon, 5);
   for (let i = 0; i < path.length; i++) {
-    await hero.moveTo(path[i], 10);
+    await hero.moveTo(path[i], 20);
     hexagonGrid.container.sortChildren()
   }
 }));
@@ -101,7 +102,7 @@ hexagonGrid.hexagons.forEach(h => h.hoverListeners.push((hexagon) => {
     return;
   }
   arrowTarget.hide();
-  const canMove = hexagonGrid.findPath(hero.positionHexagon, hexagon, 3);
+  const canMove = hexagonGrid.findPath(hero.positionHexagon, hexagon, 5);
 
   if (canMove.length) {
     canMove.forEach(h => h.draw(true));

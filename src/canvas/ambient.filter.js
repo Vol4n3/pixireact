@@ -1,5 +1,5 @@
 import {Filter, utils} from 'pixi.js';
-import {Vertex} from './helper/vertex';
+import {Vertex} from '../helper/vertex';
 
 const fragment = `precision highp float;
 varying vec2 vTextureCoord;
