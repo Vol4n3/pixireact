@@ -11,7 +11,7 @@ import {Linear} from './helper/easing';
 import {ArrowTarget} from './canvas/arrow-target';
 import {LinearHue} from './helper/utils';
 import {Game} from './canvas/game';
-import {LightPointFilter} from './canvas/light-point.filter';
+import {LightPointFilter} from './canvas/light/light-point.filter';
 import {AmbientFilter} from './canvas/ambient.filter';
 import socketResolver from './socket/socket';
 import Camera from './canvas/camera';
