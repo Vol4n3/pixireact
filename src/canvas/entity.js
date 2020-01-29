@@ -2,14 +2,6 @@ import {Sprite} from "pixi.js";
 import {EaseOutCubic, Linear} from '../helper/easing';
 
 export class Entity {
-  type;
-  direction = {x: 0, y: 0};
-  maxTicks = 0;
-  moveTick = 1;
-  onFinish;
-  start = {x: 0, y: 0};
-  traveling = false;
-
   /**
    *
    * @param {PIXI.Application}app
@@ -17,6 +9,11 @@ export class Entity {
    * @param {Hexagon}hexagon
    */
   constructor(app, texture, hexagon) {
+    this.direction = {x: 0, y: 0};
+    this.maxTicks = 0;
+    this.moveTick = 1;
+    this.start = {x: 0, y: 0};
+    this.traveling = false;
     this.sprite = new Sprite(texture);
     this.sprite.anchor.set(0.5, 1);
     this.positionHexagon = hexagon;

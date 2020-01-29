@@ -34,13 +34,14 @@ const shuffle = (array) => {
 };
 
 export class HexagonGrid {
-  /**
-   *
-   * @type {Hexagon[]}
-   */
-  hexagons = [];
+
 
   constructor(game,container) {
+    /**
+     *
+     * @type {Hexagon[]}
+     */
+    this.hexagons = [];
     this.container = new Container();
     this.container.sortableChildren = true;
     const base = new Hexagon(0, 0, game.groundHeight/20, AxialToCube(0, 0));

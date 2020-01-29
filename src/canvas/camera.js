@@ -24,11 +24,6 @@ export default class Camera {
   }
 
   /**
-   * @var {PIXI.Sprite}_follow
-   */
-  _follow;
-
-  /**
    *
    * @param {PIXI.Sprite} sprite
    */

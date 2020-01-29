@@ -1,7 +1,6 @@
 import {Container, Graphics} from "pixi.js";
 
 export class Ground {
-  groundHeight;
 
   constructor(game, container) {
     this.container = new Container();

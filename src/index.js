@@ -1,6 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './ui/App';
 import {BaseTexture, Container, Rectangle, Texture, Graphics,filters,utils, Sprite} from 'pixi.js';
 import {Sun} from './canvas/sun';
 import {Ground} from './canvas/ground';
@@ -15,9 +12,7 @@ import {LightPointFilter} from './canvas/light/light-point.filter';
 import {AmbientFilter} from './canvas/ambient.filter';
 import socketResolver from './socket/socket';
 import Camera from './canvas/camera';
-
-ReactDOM.render(<App/>, document.getElementById('root'));
-
+import ImageHeroes from '../public/assets.png';
 //socket
 socketResolver.then(socket=>{
   console.log('index');
@@ -58,7 +53,7 @@ hexagonGrid.container.zIndex = 2;
 
 
 // entities
-const assets = new BaseTexture('./assets.png');
+const assets = new BaseTexture(ImageHeroes);
 // hero
 const heroTexture = new Texture(assets, new Rectangle(0, 0, 120, 120));
 const hero = new Entity(game.app, heroTexture, hexagonGrid.hexagons[0]);

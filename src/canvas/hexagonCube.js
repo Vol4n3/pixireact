@@ -177,10 +177,6 @@ export const circleCube = (cube, start, end) => {
 };
 
 export class HexagonCube {
-  x;
-  y;
-  z;
-
   constructor(x, y, z) {
     if ((x + y + z) !== 0) {
       console.warn('sum hexa cube not equal to 0');

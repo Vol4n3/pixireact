@@ -1,21 +1,7 @@
 import {Graphics, Point, Polygon} from "pixi.js";
 
 export class Hexagon {
-  /**
-   * @type {function(Hexagon,Event)[]}
-   */
-  blurListeners = [];
-  /**
-   * @type {function(Hexagon,Event)[]}
-   */
-  clickListeners = [];
-  cube;
-  /**
-   * @type {function(Hexagon,Event)[]}
-   */
-  hoverListeners = [];
-  sprite = new Graphics();
-  attachedEntity;
+
   /**
    *
    * @param {number} x
@@ -24,6 +10,19 @@ export class Hexagon {
    * @param {HexagonCube}cube
    */
   constructor(x, y, radius, cube) {
+    /**
+     * @type {function(Hexagon,Event)[]}
+     */
+    this.blurListeners = [];
+    /**
+     * @type {function(Hexagon,Event)[]}
+     */
+    this.clickListeners = [];
+    /**
+     * @type {function(Hexagon,Event)[]}
+     */
+    this.hoverListeners = [];
+    this.sprite = new Graphics();
     this.radius = radius;
     this.x = x;
     this.y = y;

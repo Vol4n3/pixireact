@@ -1,10 +1,10 @@
 import {Filter, utils} from 'pixi.js';
-import {Vertex} from '../../helper/vertex';
-import fragment from 'light-point.fragment.glsl'
+import vertex from './default.vert';
+import fragment from './light-point.frag'
 
 export class LightPointFilter extends Filter {
   constructor(options = {}) {
-    super(Vertex, fragment);
+    super(vertex, fragment);
     this.uniforms.dimensions = new Float32Array(2);
     this.uniforms.uColor = new Float32Array(3);
     this.uniforms.uEllipse = new Float32Array(2);
