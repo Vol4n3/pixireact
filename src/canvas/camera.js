@@ -10,6 +10,9 @@ export default class Camera {
     this.world.sortableChildren = true;
     this._screenWidth = game.width - game.padding - game.width / 12;
     this._screenHeight = game.height - game.groundHeight -  game.height / 25;
+  
+  this.world.setTransform()
+
     game.app.stage.addChild(this.world);
     game.app.ticker.add(() => {
       if (!this._follow) {
@@ -19,7 +22,7 @@ export default class Camera {
       let y = this._offsetY(this._follow.position.y);
       x = x < 0 ? 0 : x + this._screenWidth + game.padding > this.world.width ? this.world.width - this._screenWidth - game.padding : x;
       y = y < 0 ? 0 : y + this._screenHeight  > this.world.height ? this.world.height - this._screenHeight : y;
-      this.world.position.set(x, y);
+      this.world.position.set(x , y );
     })
   }
 
